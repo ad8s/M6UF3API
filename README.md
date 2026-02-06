@@ -4,6 +4,11 @@ Aquesta API es connecta a MongoDB i retorna informació depenent del endpoint qu
 
 ---
 
+### Link del projecte
+
+- [https://m6uf3api-two.vercel.app](https://m6uf3api-two.vercel.app)
+
+
 ## ENDPOINTS
 
 | Mètode | Endpoint | Descripció |
@@ -55,5 +60,5 @@ Content-Type: application/json
 ### 4. Eliminar una entrada
 
 ```http
-DELETE https://m6uf3api-two.vercel.app/delete/6981b728ba303ee01a42c163
+DELETE https://m6uf3api-two.vercel.app/delete/6985a13b524908cbf884e236
 ```
