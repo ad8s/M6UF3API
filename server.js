@@ -87,7 +87,7 @@ app.get('/list', async (req, res) => {
   try {
     const entrades = await Entrades.find( );
     res.status(200).json(entrades);
-    console.log("working");
+    console.log("working"); 
   } catch (err) {
     res.status(500).json({ message: 'Error fetching entrades', error: err.message });
   }
@@ -104,6 +104,35 @@ app.post('/add', async (req, res) => {
   }
 });
 
+app.put('/update/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { ...updateData } = req.body;
+    const updatedEntrada = await Entrades.findByIdAndUpdate
+      (id, updateData, { new: true });
+    if (!updatedEntrada) {
+      return res.status(404).json({ message: 'Entrada not found' });
+    }
+    res.status(200).json(updatedEntrada);
+    console.log("Updated!");
+  } catch (err) {
+    res.status(500).json({ message: 'Error updating entrada', error: err.message });
+  }
+});
+
+app.delete('/delete/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedEntrada = await Entrades.findByIdAndDelete(id);
+    if (!deletedEntrada) {
+      return res.status(404).json({ message: 'Entrada not found' });
+    }
+    res.status(200).json({ message: 'Entrada deleted successfully' });
+    console.log("Deleted!");
+  } catch (err) {
+    res.status(500).json({ message: 'Error deleting entrada', error: err.message });
+  }
+});
 /******************************************************** */
 /******************************************************** */
 /******************************************************** */
