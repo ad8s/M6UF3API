@@ -133,6 +133,58 @@ app.delete('/delete/:id', async (req, res) => {
     res.status(500).json({ message: 'Error deleting entrada', error: err.message });
   }
 });
+app.get('/list/name/:name', async (req, res) => {
+  try {
+    const { name } = req.params;
+
+    const entrades = await Entrades.find({
+      nomAlumne: { $regex: name, $options: 'i' }
+    });
+
+    if (entrades.length === 0) {
+      return res.status(404).json({ message: 'No entries found' });
+    }
+
+    res.status(200).json(entrades);
+
+  } catch (err) {
+    res.status(500).json({ message: 'Error filtering by name', error: err.message });
+  }
+});
+app.get('/list/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const entrada = await Entrades.findById(id);
+
+    if (!entrada) {
+      return res.status(404).json({ message: 'Entrada not found' });
+    }
+
+    res.status(200).json(entrada);
+
+  } catch (err) {
+    res.status(500).json({ message: 'Error getting entry', error: err.message });
+  }
+});
+app.get('/list/completed/:status', async (req, res) => {
+  try {
+    const { status } = req.params;
+
+    const entrades = await Entrades.find({
+      completa: status === 'true'
+    });
+
+    if (entrades.length === 0) {
+      return res.status(404).json({ message: 'No entries found' });
+    }
+
+    res.status(200).json(entrades);
+
+  } catch (err) {
+    res.status(500).json({ message: 'Error filtering by status', error: err.message });
+  }
+});
 /******************************************************** */
 /******************************************************** */
 /******************************************************** */
