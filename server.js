@@ -63,24 +63,7 @@ app.get('/', (req, res) => {
   res.send('Your API is running!');
 });
 
-// Ruta per obtenir entrades entre dates
-app.get('/list/:dataini/:datafi', async (req, res) => {
-    try {
-      const { dataini, datafi } = req.params;
-      console.log("ENTRE DATES: ",dataini, datafi);
-      const entrades = await Entrades.find({
-        dataEntradaTasca: { $gte: dataini, $lte: datafi }
-      });
-  
-      if (entrades.length === 0) {
-        return res.status(404).json({ message: 'No entrada found in this date range' });
-      }
-  
-      res.status(200).json(entrades);
-    } catch (err) {
-      res.status(500).json({ message: 'Error fetching entrades', error: err.message });
-    }
-});
+
 
 // Ruta per obtenir tots els usuaris
 app.get('/list', async (req, res) => {
@@ -151,22 +134,7 @@ app.get('/list/name/:name', async (req, res) => {
     res.status(500).json({ message: 'Error filtering by name', error: err.message });
   }
 });
-app.get('/list/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
 
-    const entrada = await Entrades.findById(id);
-
-    if (!entrada) {
-      return res.status(404).json({ message: 'Entrada not found' });
-    }
-
-    res.status(200).json(entrada);
-
-  } catch (err) {
-    res.status(500).json({ message: 'Error getting entry', error: err.message });
-  }
-});
 app.get('/list/completed/:status', async (req, res) => {
   try {
     const { status } = req.params;
@@ -184,6 +152,40 @@ app.get('/list/completed/:status', async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: 'Error filtering by status', error: err.message });
   }
+});
+app.get('/list/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const entrada = await Entrades.findById(id);
+
+    if (!entrada) {
+      return res.status(404).json({ message: 'Entrada not found' });
+    }
+
+    res.status(200).json(entrada);
+
+  } catch (err) {
+    res.status(500).json({ message: 'Error getting entry', error: err.message });
+  }
+});
+// Ruta per obtenir entrades entre dates
+app.get('/list/:dataini/:datafi', async (req, res) => {
+    try {
+      const { dataini, datafi } = req.params;
+      console.log("ENTRE DATES: ",dataini, datafi);
+      const entrades = await Entrades.find({
+        dataEntradaTasca: { $gte: dataini, $lte: datafi }
+      });
+  
+      if (entrades.length === 0) {
+        return res.status(404).json({ message: 'No entrada found in this date range' });
+      }
+  
+      res.status(200).json(entrades);
+    } catch (err) {
+      res.status(500).json({ message: 'Error fetching entrades', error: err.message });
+    }
 });
 /******************************************************** */
 /******************************************************** */
