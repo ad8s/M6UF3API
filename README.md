@@ -14,6 +14,9 @@ Aquesta API es connecta a MongoDB i retorna informació depenent del endpoint qu
 | Mètode | Endpoint | Descripció |
 |--------|----------|------------|
 | GET | [https://m6uf3api-two.vercel.app/list](https://m6uf3api-two.vercel.app/list) | Retorna totes les entrades de la base de dades. |
+| GET | [https://m6uf3api-two.vercel.app/list/:id](https://m6uf3api-two.vercel.app/list/:id) | Retorna una entrada específica segons el seu `_id`. |
+| GET | [https://m6uf3api-two.vercel.app/list/name/:name](https://m6uf3api-two.vercel.app/list/name/:name) | Retorna les entrades que coincideixen amb el `name` especificat (búsqueda case-insensitive). |
+| GET | [https://m6uf3api-two.vercel.app/list/completed/:status](https://m6uf3api-two.vercel.app/list/completed/:status) | Retorna les entrades filtrades per estat de completació (`true` o `false`). |
 | GET | [https://m6uf3api-two.vercel.app/list/:dataInici/:dataFi](https://m6uf3api-two.vercel.app/list/:dataInici/:dataFi) | Retorna les entrades entre dues dates (`dataInici` i `dataFi`). |
 | POST | [https://m6uf3api-two.vercel.app/add](https://m6uf3api-two.vercel.app/add) | Afegeix una nova entrada a la base de dades. |
 | PUT | [https://m6uf3api-two.vercel.app/update/:id](https://m6uf3api-two.vercel.app/update/:id) | Actualitza els camps d'una entrada específica segons el seu `_id`. |
@@ -23,13 +26,34 @@ Aquesta API es connecta a MongoDB i retorna informació depenent del endpoint qu
 
 ## EXEMPLES D'ÚS
 
-### 1. Obtenir entrades entre dates
+### 1. Obtenir una entrada per ID
+
+```http
+GET https://m6uf3api-two.vercel.app/list/6985a13b524908cbf884e236
+```
+---
+
+### 2. Cercar entrades per nom
+
+```http
+GET https://m6uf3api-two.vercel.app/list/name/Adrian
+```
+---
+
+### 3. Obtenir entrades per estat de completació
+
+```http
+GET https://m6uf3api-two.vercel.app/list/completed/true
+```
+---
+
+### 4. Obtenir entrades entre dates
 
 ```http
 GET https://m6uf3api-two.vercel.app/list/2025-12-01T00:00:00.000Z/2025-12-05T23:59:59.999Z
 ```
 ---
-### 2. Afegir una nova entrada
+### 5. Afegir una nova entrada
 
 ```http
 POST https://m6uf3api-two.vercel.app/add
@@ -45,7 +69,7 @@ Content-Type: application/json
 }
 ```
 ---
-### 3. Actualitzar una entrada
+### 6. Actualitzar una entrada
 
 ```http
 PUT https://m6uf3api-two.vercel.app/update/6985a13b524908cbf884e236
@@ -57,7 +81,7 @@ Content-Type: application/json
 }
 ```
 ---
-### 4. Eliminar una entrada
+### 7. Eliminar una entrada
 
 ```http
 DELETE https://m6uf3api-two.vercel.app/delete/6985a13b524908cbf884e236
